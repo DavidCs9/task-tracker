@@ -16,7 +16,11 @@ function App() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const API_URL = getApiUrl();
+  let API_URL = getApiUrl();
+  // transform from HTTP to HTTPS
+  if (API_URL.startsWith("http://")) {
+    API_URL = API_URL.replace("http://", "https://");
+  }
 
   useEffect(() => {
     fetchTasks();
