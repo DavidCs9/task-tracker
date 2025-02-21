@@ -1,0 +1,31 @@
+# frontend/buildspec.yml
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16
+    commands:
+      - cd frontend
+      - npm install
+
+  pre_build:
+    commands:
+      - echo Creating production environment file...
+      - echo "VITE_API_URL=http://$API_ENDPOINT" > .env.production
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - npm run build
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - aws s3 sync dist/ s3://$S3_BUCKET/ --delete
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
+
+artifacts:
+  base-directory: frontend/dist
+  files:
+    - "**/*"
