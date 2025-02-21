@@ -47,7 +47,7 @@ app.post("/api/tasks", async (req, res) => {
     const taskId = Date.now().toString();
 
     const params = {
-      TableName: "Tasks",
+      TableName: "dev-tasks",
       Item: {
         taskId,
         title,
