@@ -21,7 +21,7 @@ app.use(cors());
 
 // Initialize DynamoDB client
 const dynamoDB = new AWS.DynamoDB.DocumentClient({
-  region: "us-east-2",
+  region: "us-west-1",
 });
 
 // Health Check endpoint
