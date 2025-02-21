@@ -1,0 +1,18 @@
+{"timestamp":"2025-02-21T18:15:02.157Z","level":"info","levelNumber":30,"service":"MyMainService","message":"Starting application..."}
+{"timestamp":"2025-02-21T18:15:10.573Z","level":"info","levelNumber":30,"service":"MyMainService","message":"Starting application..."}
+{"timestamp":"2025-02-21T18:15:25.585Z","level":"info","levelNumber":30,"service":"backend/app","message":"Starting application..."}
+{"timestamp":"2025-02-21T18:15:26.921Z","level":"info","levelNumber":30,"service":"backend/app.js","message":"Starting application..."}
+{"timestamp":"2025-02-21T18:19:21.950Z","level":"error","levelNumber":50,"service":"backend/app.js","message":"Failed to fetch tasks","optional":{"message":"Missing region in config","code":"ConfigError","time":"2025-02-21T18:19:21.947Z"}}
+{"timestamp":"2025-02-21T18:25:04.239Z","level":"error","levelNumber":50,"service":"backend/app.js","message":"Failed to fetch tasks","optional":{"message":"Missing region in config","code":"ConfigError","time":"2025-02-21T18:25:04.234Z"}}
+{"timestamp":"2025-02-21T18:27:00.376Z","level":"info","levelNumber":30,"service":"backend/app.js","message":"No tasks found"}
+{"timestamp":"2025-02-21T18:27:54.316Z","level":"error","levelNumber":50,"service":"backend/app.js","message":"Title and description are required"}
+{"timestamp":"2025-02-21T18:28:30.783Z","level":"info","levelNumber":30,"service":"backend/app.js","message":"Task created successfully","optional":{"taskId":"1740162510509"}}
+{"timestamp":"2025-02-21T18:32:53.758Z","level":"info","levelNumber":30,"service":"backend/app.js","message":"Task created successfully","optional":{"taskId":"1740162773545"}}
+{"timestamp":"2025-02-21T18:33:36.352Z","level":"info","levelNumber":30,"service":"backend/app.js","message":"Task created successfully","optional":{"taskId":"1740162816146"}}
+{"timestamp":"2025-02-21T18:37:34.472Z","level":"info","levelNumber":30,"service":"backend/app.js","message":"Task created successfully","optional":{"taskId":"1740163054263"}}
+{"timestamp":"2025-02-21T18:40:34.158Z","level":"info","levelNumber":30,"service":"backend/app.js","message":"Task created successfully","optional":{"taskId":"1740163233952"}}
+{"timestamp":"2025-02-21T18:46:29.325Z","level":"info","levelNumber":30,"service":"backend/app.js","message":"Task created successfully","optional":{"taskId":"1740163589122"}}
+{"timestamp":"2025-02-21T18:46:40.898Z","level":"info","levelNumber":30,"service":"backend/app.js","message":"Task created successfully","optional":{"taskId":"1740163600694"}}
+{"timestamp":"2025-02-21T18:49:47.045Z","level":"info","levelNumber":30,"service":"backend/app.js","message":"Task created successfully","optional":{"taskId":"1740163786834"}}
+{"timestamp":"2025-02-21T18:50:05.650Z","level":"info","levelNumber":30,"service":"backend/app.js","message":"Task created successfully","optional":{"taskId":"1740163805446"}}
+{"timestamp":"2025-02-21T18:50:22.952Z","level":"info","levelNumber":30,"service":"backend/app.js","message":"Task created successfully","optional":{"taskId":"1740163822744"}}
