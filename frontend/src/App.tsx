@@ -1,6 +1,5 @@
 // frontend/src/App.tsx
 import { useState, useEffect } from "react";
-import { getApiUrl } from "./config";
 import styles from "./App.module.css";
 
 interface Task {
@@ -16,11 +15,12 @@ function App() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  let API_URL = getApiUrl();
-  // transform from HTTP to HTTPS
-  if (API_URL.startsWith("http://")) {
-    API_URL = API_URL.replace("http://", "https://");
-  }
+  // let API_URL = getApiUrl();
+  // // transform from HTTP to HTTPS
+  // if (API_URL.startsWith("http://")) {
+  //   API_URL = API_URL.replace("http://", "https://");
+  // }
+  const API_URL = "https://api.0123543.xyz";
 
   useEffect(() => {
     fetchTasks();
