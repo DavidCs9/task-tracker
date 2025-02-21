@@ -64,7 +64,7 @@ app.post("/api/tasks", async (req, res) => {
   } catch (error) {
     logger.error("Failed to create task", error);
     subsegment.addError(error);
-    res.status(500).json({ error: "Failed to create task" });
+    res.status(500).json({ error: "Failed to create task" + error });
   } finally {
     subsegment.close();
   }
@@ -91,7 +91,7 @@ app.get("/api/tasks", async (req, res) => {
   } catch (error) {
     logger.error("Failed to fetch tasks", error);
     subsegment.addError(error);
-    res.status(500).json({ error: "Failed to fetch tasks" });
+    res.status(500).json({ error: "Failed to fetch tasks: " + error });
   } finally {
     subsegment.close();
   }
