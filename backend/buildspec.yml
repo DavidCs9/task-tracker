@@ -1,4 +1,3 @@
-# backend/buildspec.yml
 version: 0.2
 
 phases:
@@ -13,7 +12,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t $ECR_REPOSITORY_URI:latest .
+      - docker build -f backend/Dockerfile -t $ECR_REPOSITORY_URI:latest backend
       - docker tag $ECR_REPOSITORY_URI:latest $ECR_REPOSITORY_URI:$IMAGE_TAG
 
   post_build:
