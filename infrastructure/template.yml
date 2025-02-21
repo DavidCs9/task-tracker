@@ -416,7 +416,7 @@ Resources:
         PrivilegedMode: true
         EnvironmentVariables:
           - Name: ECR_REPOSITORY_URI
-            Value: !Ref ECRRepository
+            Value: !GetAtt ECRRepository.RepositoryUri
           - Name: ENVIRONMENT
             Value: !Ref Environment
       Source:
