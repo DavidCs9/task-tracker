@@ -19,6 +19,8 @@ app.use(AWSXRay.express.openSegment("TaskTimeTracker"));
 app.use(express.json());
 app.use(cors());
 
+const TABLE_NAME = "dev-tasks";
+
 // Initialize DynamoDB client
 const dynamoDB = new AWS.DynamoDB.DocumentClient({
   region: "us-west-1",
@@ -47,7 +49,7 @@ app.post("/api/tasks", async (req, res) => {
     const taskId = Date.now().toString();
 
     const params = {
-      TableName: "dev-tasks",
+      TableName: TABLE_NAME,
       Item: {
         taskId,
         title,
@@ -77,7 +79,7 @@ app.get("/api/tasks", async (req, res) => {
 
   try {
     const params = {
-      TableName: "Tasks",
+      TableName: TABLE_NAME,
     };
 
     const result = await dynamoDB.scan(params).promise();
