@@ -22,7 +22,7 @@ A distributed task tracking application with AWS X-Ray integration.
 
 ```bash
 aws cloudformation deploy \
->   --stack-name task-tracker \
->   --template-file infrastructure/template.yml \
->   --capabilities CAPABILITY_IAM
+     --stack-name task-tracker \
+     --template-file infrastructure/template.yml \
+     --capabilities CAPABILITY_IAM
 ```
