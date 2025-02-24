@@ -78,17 +78,24 @@ app.get("/api/tasks", async (req, res) => {
   const segment = AWSXRay.getSegment();
   const subsegment = segment.addNewSubsegment("getTasks");
 
-  try {
-    const params = {
-      TableName: TABLE_NAME,
-    };
+  // sort key is createdAt, so we will get the latest tasks first by sorting in descending order
+  const params = {
+    TableName: TABLE_NAME,
+    ScanIndexForward: false,
+  };
 
+  try {
     const result = await dynamoDB.scan(params).promise();
 
     if (result.Items.length === 0) {
       logger.info("No tasks found");
       return res.status(200).json([]);
     }
+
+    const sortSubsegment = segment.addNewSubsegment("sortTasks");
+    // sort tasks by createdAt in descending order
+    result.Items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    sortSubsegment.close();
 
     res.json(result.Items);
   } catch (error) {

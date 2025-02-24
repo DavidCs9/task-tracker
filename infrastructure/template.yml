@@ -153,13 +153,9 @@ Resources:
       AttributeDefinitions:
         - AttributeName: taskId
           AttributeType: S
-        - AttributeName: createdAt
-          AttributeType: S
       KeySchema:
         - AttributeName: taskId
           KeyType: HASH
-        - AttributeName: createdAt
-          KeyType: RANGE
 
   # ECS Task Definition
   TaskTrackerTaskDefinition:
