@@ -34,10 +34,12 @@ app.get("/health", (req, res) => {
 // Create Task endpoint
 app.post("/api/tasks", async (req, res) => {
   const segment = AWSXRay.getSegment();
+  logger.info("xray segment", { segment });
   if (!segment) {
     logger.error("Failed to get segment", { segment });
   }
   const subsegment = segment.addNewSubsegment("createTask");
+  logger.info("xray subsegment", { subsegment });
 
   try {
     const { title, description } = req.body;
@@ -72,6 +74,7 @@ app.post("/api/tasks", async (req, res) => {
     res.status(500).json({ error: "Failed to create task" + error });
   } finally {
     subsegment.close();
+    logger.info("Subsegment closed", { subsegment });
   }
 });
 
