@@ -27,6 +27,18 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient({
   region: "us-west-1",
 });
 
+const sendSNSMessage = async (message) => {
+  const subsegment = AWSXRay.getSegment().addNewSubsegment("sendSNSMessage");
+  const sns = new AWS.SNS();
+  const params = {
+    TopicArn: "arn:aws:sns:us-west-1:225989371926:task-tracker",
+    Message: message,
+  };
+
+  await sns.publish(params).promise();
+  subsegment.close();
+};
+
 // Health Check endpoint
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "healthy" });
@@ -63,6 +75,7 @@ app.post("/api/tasks", async (req, res) => {
     await dynamoDB.put(params).promise();
 
     logger.info("Task created successfully", { taskId });
+    await sendSNSMessage(`Task created: ${title}`);
     res.status(201).json({ taskId, message: "Task created successfully" });
   } catch (error) {
     logger.error("Failed to create task", error);
