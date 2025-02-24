@@ -34,6 +34,9 @@ app.get("/health", (req, res) => {
 // Create Task endpoint
 app.post("/api/tasks", async (req, res) => {
   const segment = AWSXRay.getSegment();
+  if (!segment) {
+    logger.error("Failed to get segment", { segment });
+  }
   const subsegment = segment.addNewSubsegment("createTask");
 
   try {
