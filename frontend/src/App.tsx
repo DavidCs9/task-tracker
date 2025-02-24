@@ -1,6 +1,7 @@
 // frontend/src/App.tsx
 import { useState, useEffect } from "react";
 import styles from "./App.module.css";
+import Toastify from "toastify-js";
 
 interface Task {
   taskId: string;
@@ -15,11 +16,6 @@ function App() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  // let API_URL = getApiUrl();
-  // // transform from HTTP to HTTPS
-  // if (API_URL.startsWith("http://")) {
-  //   API_URL = API_URL.replace("http://", "https://");
-  // }
   const API_URL = "https://api.0123543.xyz";
 
   useEffect(() => {
@@ -33,6 +29,10 @@ function App() {
       setTasks(data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
+      Toastify({
+        text: "Error fetching tasks",
+        backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
+      }).showToast();
     }
   };
 
@@ -52,8 +52,35 @@ function App() {
       setTitle("");
       setDescription("");
       fetchTasks();
+      Toastify({
+        text: "Task created",
+        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+      }).showToast();
     } catch (error) {
       console.error("Error creating task:", error);
+      Toastify({
+        text: "Error creating task",
+        backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
+      }).showToast();
+    }
+  };
+
+  const deleteTask = async (taskId: string) => {
+    try {
+      await fetch(`${API_URL}/api/tasks/${taskId}`, {
+        method: "DELETE",
+      });
+      fetchTasks();
+      Toastify({
+        text: "Task deleted",
+        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+      }).showToast();
+    } catch (error) {
+      console.error("Error deleting task:", error);
+      Toastify({
+        text: "Error deleting task",
+        backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
+      }).showToast();
     }
   };
 
@@ -105,6 +132,12 @@ function App() {
                   <div className={styles.taskHeader}>
                     <h2>{task.title}</h2>
                     <span className={styles.taskStatus}>{task.status}</span>
+                    <button
+                      className={styles.deleteButtonX}
+                      onClick={() => deleteTask(task.taskId)}
+                    >
+                      x
+                    </button>
                   </div>
                   <p className={styles.taskDescription}>{task.description}</p>
                   <time className={styles.taskDate}>

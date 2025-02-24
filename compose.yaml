@@ -3,11 +3,15 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /src
+          ignore:
+            - node_modules/
     ports:
       - "5173:5173"
-    volumes:
-      - ./frontend:/src
-      - /node_modules
     environment:
       - VITE_API_URL=http://localhost:3000
     depends_on:

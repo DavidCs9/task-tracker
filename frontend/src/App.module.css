@@ -108,6 +108,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  position: relative;
 }
 
 .taskHeader h2 {
@@ -151,4 +152,19 @@
   .taskGrid {
     grid-template-columns: 1fr;
   }
+}
+
+.deleteButtonX {
+  background: #e53e3e;
+  color: white;
+  border: none;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  position: absolute;
+  top: -1.5em;
+  right: -1.5rem;
 }
