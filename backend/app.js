@@ -93,7 +93,7 @@ app.get("/api/tasks", async (req, res) => {
     }
 
     const sortSubsegment = segment.addNewSubsegment("sortTasks");
-    result.Items.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    result.Items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     sortSubsegment.close();
 
     res.json(result.Items);
