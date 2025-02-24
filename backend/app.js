@@ -35,13 +35,7 @@ app.get("/health", (req, res) => {
 // Create Task endpoint
 app.post("/api/tasks", async (req, res) => {
   const segment = AWSXRay.getSegment();
-  logger.info("xray segment", { segment });
-  if (!segment) {
-    logger.error("Failed to get segment", { segment });
-  }
-  segment.forceSemplio;
   const subsegment = segment.addNewSubsegment("createTask");
-  logger.info("xray subsegment", { subsegment });
 
   try {
     const { title, description } = req.body;
@@ -76,7 +70,6 @@ app.post("/api/tasks", async (req, res) => {
     res.status(500).json({ error: "Failed to create task" + error });
   } finally {
     subsegment.close();
-    logger.info("Subsegment closed", { subsegment });
   }
 });
 
@@ -102,6 +95,86 @@ app.get("/api/tasks", async (req, res) => {
     logger.error("Failed to fetch tasks", error);
     subsegment.addError(error);
     res.status(500).json({ error: "Failed to fetch tasks: " + error });
+  } finally {
+    subsegment.close();
+  }
+});
+
+// Delete Task endpoint
+app.delete("/api/tasks/:taskId", async (req, res) => {
+  const segment = AWSXRay.getSegment();
+  const subsegment = segment.addNewSubsegment("deleteTask");
+
+  try {
+    const { taskId } = req.params;
+
+    const params = {
+      TableName: TABLE_NAME,
+      Key: {
+        taskId,
+      },
+    };
+
+    // check if task exists
+    const task = await dynamoDB.get(params).promise();
+    if (!task.Item) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
+    await dynamoDB.delete(params).promise();
+
+    logger.info("Task deleted successfully", { taskId });
+    res.json({ message: "Task deleted successfully" });
+  } catch (error) {
+    logger.error("Failed to delete task", error);
+    subsegment.addError(error);
+    res.status(500).json({ error: "Failed to delete task: " + error });
+  } finally {
+    subsegment.close();
+  }
+});
+
+// Update Task endpoint
+app.put("/api/tasks/:taskId", async (req, res) => {
+  const segment = AWSXRay.getSegment();
+  const subsegment = segment.addNewSubsegment("updateTask");
+
+  try {
+    const { taskId } = req.params;
+    const { title, description, status } = req.body;
+
+    if (!title || !description || !status) {
+      logger.error("Title, description, and status are required");
+      return res.status(400).json({
+        error: "Title, description, and status are required",
+      });
+    }
+
+    const params = {
+      TableName: TABLE_NAME,
+      Key: {
+        taskId,
+      },
+      UpdateExpression: "set title = :t, description = :d, #s = :s",
+      ExpressionAttributeNames: {
+        "#s": "status",
+      },
+      ExpressionAttributeValues: {
+        ":t": title,
+        ":d": description,
+        ":s": status,
+      },
+      ReturnValues: "UPDATED_NEW",
+    };
+
+    const result = await dynamoDB.update(params).promise();
+
+    logger.info("Task updated successfully", { taskId });
+    res.json(result.Attributes);
+  } catch (error) {
+    logger.error("Failed to update task", error);
+    subsegment.addError(error);
+    res.status(500).json({ error: "Failed to update task: " + error });
   } finally {
     subsegment.close();
   }
