@@ -176,7 +176,7 @@ Resources:
             - ContainerPort: !Ref ContainerPort
           Environment:
             - Name: AWS_XRAY_DAEMON_ADDRESS
-              Value: xray-daemon:2000
+              Value: 127.0.0.1:2000
             - Name: ENVIRONMENT
               Value: !Ref Environment
           LogConfiguration:
