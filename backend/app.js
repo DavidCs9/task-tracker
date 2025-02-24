@@ -12,6 +12,7 @@ logger.debug("Starting application...");
 
 // Configure X-Ray
 AWSXRay.captureAWS(AWS);
+AWSXRay.middleware.setSamplingRules("sampling-rules.json");
 const app = express();
 
 // Enable X-Ray Express middleware
@@ -38,6 +39,7 @@ app.post("/api/tasks", async (req, res) => {
   if (!segment) {
     logger.error("Failed to get segment", { segment });
   }
+  segment.forceSemplio;
   const subsegment = segment.addNewSubsegment("createTask");
   logger.info("xray subsegment", { subsegment });
 

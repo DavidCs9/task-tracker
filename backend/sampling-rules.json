@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "description": "Always sample POST /api/tasks",
+      "host": "*",
+      "http_method": "POST",
+      "url_path": "/api/tasks",
+      "fixed_target": 1,
+      "rate": 1.0
+    },
+    {
+      "description": "Default rule for all other requests",
+      "host": "*",
+      "http_method": "*",
+      "url_path": "*",
+      "fixed_target": 1,
+      "rate": 0.05
+    }
+  ],
+  "default": {
+    "fixed_target": 1,
+    "rate": 0.05
+  }
+}
